@@ -162,7 +162,7 @@ int main(void)
   setTimer(100, 0);
   setTimer(100, 1);
   setTimer(50, 2);
-  int currentState = 0;
+//  int currentState = 0;
   while (1)
   {
 	  if(timer_flag[0] == 1){
@@ -175,24 +175,9 @@ int main(void)
 	  }
 	  if(timer_flag[2] == 1){
 		  setTimer(50, 2);
-		  switch(currentState){
-		  case 0:
-			  update7SEG(0);
-			  currentState = 1;
-			  break;
-		  case 1:
-			  update7SEG(1);
-			  currentState = 2;
-			  break;
-		  case 2:
-			  update7SEG(2);
-			  currentState = 3;
-			  break;
-		  case 3:
-			  update7SEG(3);
-			  currentState = 0;
-			  break;
-		  }
+		  update7SEG(index_led);
+		  index_led++;
+		  if(index_led >= MAX_LED) index_led = 0;
 	  }
 
     /* USER CODE END WHILE */
