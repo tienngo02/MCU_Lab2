@@ -161,7 +161,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   setTimer(100, 0);
   setTimer(100, 1);
-  setTimer(50, 2);
+  setTimer(25, 2);
 //  int currentState = 0;
   while (1)
   {
@@ -174,7 +174,7 @@ int main(void)
 		  HAL_GPIO_TogglePin(DOT_GPIO_Port, DOT_Pin);
 	  }
 	  if(timer_flag[2] == 1){
-		  setTimer(50, 2);
+		  setTimer(25, 2);
 		  update7SEG(index_led);
 		  index_led++;
 		  if(index_led >= MAX_LED) index_led = 0;

@@ -440,9 +440,9 @@ int main(void)
  80003b6:	2101      	movs	r1, #1
  80003b8:	2064      	movs	r0, #100	; 0x64
  80003ba:	f000 f92b 	bl	8000614 <setTimer>
-  setTimer(50, 2);
+  setTimer(25, 2);
  80003be:	2102      	movs	r1, #2
- 80003c0:	2032      	movs	r0, #50	; 0x32
+ 80003c0:	2019      	movs	r0, #25
  80003c2:	f000 f927 	bl	8000614 <setTimer>
 //  int currentState = 0;
   while (1)
@@ -480,9 +480,9 @@ int main(void)
  80003f8:	689b      	ldr	r3, [r3, #8]
  80003fa:	2b01      	cmp	r3, #1
  80003fc:	d1e3      	bne.n	80003c6 <main+0x32>
-		  setTimer(50, 2);
+		  setTimer(25, 2);
  80003fe:	2102      	movs	r1, #2
- 8000400:	2032      	movs	r0, #50	; 0x32
+ 8000400:	2019      	movs	r0, #25
  8000402:	f000 f907 	bl	8000614 <setTimer>
 		  update7SEG(index_led);
  8000406:	4b0c      	ldr	r3, [pc, #48]	; (8000438 <main+0xa4>)
