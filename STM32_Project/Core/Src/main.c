@@ -117,6 +117,26 @@ void update7SEG(int index){
 	}
 }
 
+void updateClockBuffer(int hour, int minute){
+	if(hour<10){
+		led_buffer[0] = 0;
+		led_buffer[1] = hour;
+	}
+	else{
+		led_buffer[0] = hour/10;
+		led_buffer[1] = hour%10;
+	}
+
+	if(minute<10){
+		led_buffer[2] = 0;
+		led_buffer[3] = minute;
+	}
+	else{
+		led_buffer[2] = minute/10;
+		led_buffer[3] = minute%10;
+	}
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -162,7 +182,9 @@ int main(void)
   setTimer(100, 0);
   setTimer(100, 1);
   setTimer(25, 2);
+  setTimer(100, 3);
 //  int currentState = 0;
+  int hour = 15, minute = 8, second = 50;
   while (1)
   {
 	  if(timer_flag[0] == 1){
@@ -179,7 +201,22 @@ int main(void)
 		  index_led++;
 		  if(index_led >= MAX_LED) index_led = 0;
 	  }
-
+	  if(timer_flag[3] == 1){
+		  setTimer(100, 3);
+		  second++;
+		  if(second >= 60){
+			  second = 0;
+			  minute++;
+		  }
+		  if(minute >= 60){
+			  minute = 0;
+			  hour++;
+		  }
+		  if(hour >= 24){
+			  hour = 0;
+		  }
+		  updateClockBuffer(hour, minute);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
