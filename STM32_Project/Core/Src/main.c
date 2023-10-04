@@ -118,23 +118,10 @@ void update7SEG(int index){
 }
 
 void updateClockBuffer(int hour, int minute){
-	if(hour<10){
-		led_buffer[0] = 0;
-		led_buffer[1] = hour;
-	}
-	else{
-		led_buffer[0] = hour/10;
-		led_buffer[1] = hour%10;
-	}
-
-	if(minute<10){
-		led_buffer[2] = 0;
-		led_buffer[3] = minute;
-	}
-	else{
-		led_buffer[2] = minute/10;
-		led_buffer[3] = minute%10;
-	}
+	led_buffer[0] = hour/10;
+	led_buffer[1] = hour%10;
+	led_buffer[2] = minute/10;
+	led_buffer[3] = minute%10;
 }
 
 /* USER CODE END PFP */
@@ -185,6 +172,7 @@ int main(void)
   setTimer(100, 3);
 //  int currentState = 0;
   int hour = 15, minute = 8, second = 50;
+  updateClockBuffer(hour, minute);
   while (1)
   {
 	  if(timer_flag[0] == 1){
