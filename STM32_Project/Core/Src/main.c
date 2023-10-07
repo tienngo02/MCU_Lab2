@@ -126,7 +126,7 @@ void updateClockBuffer(int hour, int minute){
 
 const int MAX_LED_MATRIX = 8;
 int index_led_matrix = 0;
-uint8_t matrix_buffer[8] = {0xE7, 0xC3, 0x99, 0x99, 0x81, 0x81, 0x99, 0x99};
+uint8_t matrix_buffer[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 void updateLEDMatrix(int index){
 	switch(index){
 	case 0:
@@ -286,6 +286,49 @@ void updateLEDMatrix(int index){
 	}
 }
 
+void updateMatrixBuffer(int shift){
+	uint8_t base[8] = {0x18, 0x3C, 0x66, 0x66, 0x7E, 0x7E, 0x66, 0x66};
+	if (shift >= 0){
+//	    matrix_buffer[0] = ~(base[0] >> shift);
+//	    matrix_buffer[1] = ~(base[1] >> shift);
+//	    matrix_buffer[2] = ~(base[2] >> shift);
+//	    matrix_buffer[3] = ~(base[3] >> shift);
+//	    matrix_buffer[4] = ~(base[4] >> shift);
+//	    matrix_buffer[5] = ~(base[5] >> shift);
+//	    matrix_buffer[6] = ~(base[6] >> shift);
+//	    matrix_buffer[7] = ~(base[7] >> shift);
+
+        matrix_buffer[0] = ~(base[0] << shift);
+        matrix_buffer[1] = ~(base[1] << shift);
+        matrix_buffer[2] = ~(base[2] << shift);
+        matrix_buffer[3] = ~(base[3] << shift);
+        matrix_buffer[4] = ~(base[4] << shift);
+        matrix_buffer[5] = ~(base[5] << shift);
+        matrix_buffer[6] = ~(base[6] << shift);
+        matrix_buffer[7] = ~(base[7] << shift);
+	}
+	else{
+	    shift = -shift;
+//	    matrix_buffer[0] = ~(base[0] << shift);
+//	    matrix_buffer[1] = ~(base[1] << shift);
+//	    matrix_buffer[2] = ~(base[2] << shift);
+//	    matrix_buffer[3] = ~(base[3] << shift);
+//	    matrix_buffer[4] = ~(base[4] << shift);
+//	    matrix_buffer[5] = ~(base[5] << shift);
+//	    matrix_buffer[6] = ~(base[6] << shift);
+//	    matrix_buffer[7] = ~(base[7] << shift);
+
+	    matrix_buffer[0] = ~(base[0] >> shift);
+	    matrix_buffer[1] = ~(base[1] >> shift);
+	    matrix_buffer[2] = ~(base[2] >> shift);
+	    matrix_buffer[3] = ~(base[3] >> shift);
+	    matrix_buffer[4] = ~(base[4] >> shift);
+	    matrix_buffer[5] = ~(base[5] >> shift);
+	    matrix_buffer[6] = ~(base[6] >> shift);
+	    matrix_buffer[7] = ~(base[7] >> shift);
+	}
+}
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -333,8 +376,10 @@ int main(void)
   setTimer(25, 2);
   setTimer(100, 3);
   setTimer(10, 4);
+  setTimer(80, 5);
 //  int currentState = 0;
   int hour = 15, minute = 8, second = 50;
+  int shift = -7;
   updateClockBuffer(hour, minute);
   while (1)
   {
@@ -373,8 +418,14 @@ int main(void)
 		  updateLEDMatrix(index_led_matrix);
 		  index_led_matrix++;
 		  if(index_led_matrix >= MAX_LED_MATRIX) index_led_matrix = 0;
+		  HAL_Delay(6);
 	  }
-
+	  if(timer_flag[5] == 1){
+		  setTimer(80, 5);
+		  updateMatrixBuffer(shift);
+		  shift++;
+		  if(shift >= 7) shift = -7;
+	  }
 
     /* USER CODE END WHILE */
 
